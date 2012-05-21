@@ -1,0 +1,51 @@
+#pageContainer {
+    width: 100%;
+}
+
+#gridContainer {
+    display: none;
+    margin:0 auto;
+    width: 300px;
+}
+
+.sqrTable {
+    height: 30px;
+    width: 300px;
+    border-spacing: 10px;
+}
+
+tr:hover .sqr {
+    cursor: pointer;
+}
+
+.sqr {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 75px;
+    height: 75px;
+    text-align: center;
+    background-color: #dddddd;
+    font-size: 1.75em;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    border-radius: 16px;
+}
+
+.piece-a-small {
+    font-size: 1.5em;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+
+td {
+    /*border: 1px solid red;*/
+}
+
+
