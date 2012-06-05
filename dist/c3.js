@@ -1,78 +1,78 @@
 var c3 = (function () {
-    "use strict";
-    var none = -1;
+  "use strict";
+  var none = -1,
+      player1SmallPiece ="a",
+      player1LargePiece = "A",
+      player2SmallPiece = "b",
+      player2LargePiece = "B",
+      content = [
+        [player1SmallPiece, player2SmallPiece],
+        [player1LargePiece, player2LargePiece]
+      ];
 
-    function equals(one, other) {
-        return one === other;
+  function equals(one, other) {
+    return one === other;
+  }
+
+  function isNone(value) {
+    return equals(value, none);
+  }
+
+  function ensureType(type, obj) {
+    if (type !== obj.type) {
+      throw "invalid type: " +
+          "expected '" + type + "', " +
+          "received '" + obj.type + "'";
     }
+  }
 
-    function isNone(value) {
-        return equals(value, none);
-    }
+  function toInt(s) {
+    return parseInt(s, 10);
+  }
 
-    function ensureType(type, obj) {
-        if (type !== obj.type) {
-            throw "invalid type: " +
-                "expected '" + type + "', " +
-                "received '" + obj.type + "'";
-        }
-    }
+  function toSquare(piece) {
+    ensureType("piece", piece);
+    return c3.square(piece.size, piece.playerId);
+  }
 
-    function toInt(s) {
-        return parseInt(s, 10);
-    }
+  function serialize(obj) {
+    return JSON.stringify(obj);
+  }
 
-    function toSquare(piece) {
-        ensureType("piece", piece);
-        return c3.square.get(piece.size, piece.player.id);
-    }
+  function deserialize(s) {
+    return JSON.parse(s);
+  }
 
-    function toPiece(square) {
-        ensureType("square", square);
-        return c3.piece.get(
-            square.sz,
-            c3.player.get(square.pl)
-        );
-    }
+  function getContent(size, playerId) {
+    return content[size][playerId];
+  }
 
-    function serialize(obj) {
-        return JSON.stringify(obj);
-    }
-
-    function deserialize(s) {
-        return JSON.parse(s);
-    }
-
-    return {
-        none:none,
-        player1:0,
-        player2:1,
-        smallPiece:0,
-        largePiece:1,
-        player1SmallPiece:"a",
-        player1LargePiece:"A",
-        player2SmallPiece:"b",
-        player2LargePiece:"B",
-        isNone:isNone,
-        equals:equals,
-        ensureType:ensureType,
-        toInt:toInt,
-        toPiece:toPiece,
-        toSquare:toSquare,
-        serialize:serialize,
-        deserialize:deserialize
-    };
+  return {
+    none:none,
+    player1:0,
+    player2:1,
+    smallPiece:0,
+    largePiece:1,
+    isNone:isNone,
+    equals:equals,
+    ensureType:ensureType,
+    toInt:toInt,
+    toSquare:toSquare,
+    serialize:serialize,
+    deserialize:deserialize,
+    getContent:getContent
+  };
 }());
 
 /*global c3 */
 
-c3.player = function(app, id) {
+c3.player = function(id) {
   "use strict";
-  var type = "player";
+  var type = "playerId";
 
   function equals(other) {
-    app.ensureType(type, other);
-    return app.equals(id, other.id);
+    c3.ensureType(type, other);
+    return c3.equals(id, other.id);
   }
 
   return {
@@ -83,53 +83,49 @@ c3.player = function(app, id) {
 };
 /*global c3 */
 
-c3.piece = function(size, player, app) {
+c3.piece = function (size, playerId) {
   "use strict";
   var type = "piece",
       content,
       className,
-      isNoPiece,
-      text = [
-        [app.player1SmallPiece, app.player2SmallPiece],
-        [app.player1LargePiece, app.player2LargePiece]
-      ];
+      isNoPiece;
 
-    function getClassName(isNone) {
-        return isNone ? "" : "piece-" + size + " player-" + player.id;
-    }
+  function getClassName(isNone) {
+    return isNone ? "" : "piece-" + size + " player-" + playerId;
+  }
 
-    function getContent(isNone) {
-        return isNone ? 0 : text[size][player.id];
-    }
+  function getContent(isNone) {
+    return isNone ? 0 : c3.getContent(size, playerId);
+  }
 
-    function getIsNoPiece() {
-        return app.isNone(size) || app.isNone(player.id);
-    }
+  function getIsNoPiece() {
+    return c3.isNone(size) || c3.isNone(playerId);
+  }
 
-    function equals(other) {
-        app.ensureType(type, other);
-        return app.equals(size, other.size) &&
-            player.equals(other.player);
-    }
+  function equals(other) {
+    c3.ensureType(type, other);
+    return c3.equals(size, other.size) &&
+        c3.equals(playerId, other.playerId);
+  }
 
-    function getNextSize() {
-        return size === app.none ? app.smallPiece : app.largePiece;
-    }
+  function getNextSize() {
+    return size === c3.none ? c3.smallPiece : c3.largePiece;
+  }
 
-    isNoPiece = getIsNoPiece();
-    content = getContent(isNoPiece);
-    className = getClassName(isNoPiece);
+  isNoPiece = getIsNoPiece();
+  content = getContent(isNoPiece);
+  className = getClassName(isNoPiece);
 
-    return {
-        type:type,
-        content:content,
-        className:className,
-        size:size,
-        player:player,
-        isNoPiece:isNoPiece,
-        equals:equals,
-        getNextSize:getNextSize
-    };
+  return {
+    type:type,
+    content:content,
+    className:className,
+    size:size,
+    playerId:playerId,
+    isNoPiece:isNoPiece,
+    equals:equals,
+    getNextSize:getNextSize
+  };
 };
 
 /*global c3 */
@@ -138,135 +134,143 @@ c3.square = function(size, playerId) {
     "use strict";
     return {
         type:"square",
-        pl:playerId,
-        sz:size
+        playerId:playerId,
+        size:size
     };
 };
 /*global c3 */
 /*jslint plusplus: true */
 
-c3.game = (function(app) {
-    "use strict";
-    var type = "game",
-        gameState = null,
-        playerId = app.player1,
-        squares = [],
-        resetCallback = null;
+c3.game = (function (app) {
+  "use strict";
+  var type = "game",
+      gameState = null,
+      playerId = app.player1,
+      squares = [],
+      resetCallback = null;
 
-    function updateState() {
-        gameState = app.serialize({
-          type:type,
-          playerId:playerId,
-          squares:squares
-        });
+  function updateState() {
+    gameState = app.serialize({
+      type:type,
+      playerId:playerId,
+      squares:squares
+    });
+  }
+
+  function addResetNotification(callback) {
+    resetCallback = callback;
+  }
+
+  function saveCurrentPlayerId(id) {
+    playerId = id;
+    updateState();
+  }
+
+  function saveSquare(index, square) {
+    squares[index] = square;
+    updateState();
+  }
+
+  function getGame() {
+    return app.deserialize(gameState);
+  }
+
+  function setGame(newGame) {
+    app.ensureType(type, newGame);
+    if (app.equals(gameState, app.serialize(newGame))) {
+      return;
     }
-
-    function addResetNotification(callback) {
-        resetCallback = callback;
+    playerId = newGame.playerId;
+    squares = newGame.squares;
+    updateState();
+    if (resetCallback !== null) {
+      resetCallback(newGame);
     }
+  }
 
-    function saveCurrentPlayerId(id) {
-        playerId = id;
-        updateState();
+  function resetGame() {
+    var i;
+    for (i = 0; i < 9; i++) {
+      squares[i] = c3.square(app.none, app.none);
     }
+    setGame({
+      type:type,
+      playerId:app.player1,
+      squares:squares
+    });
+  }
 
-    function saveSquare(index, square) {
-        squares[index] = square;
-        updateState();
-    }
-
-    function getGame() {
-        return app.deserialize(gameState);
-    }
-
-    function setGame(game) {
-        app.ensureType(type, game);
-        if(app.equals(gameState, app.serialize(game))) {
-            return;
-        }
-        playerId = game.playerId;
-        squares = game.squares;
-        updateState();
-        if(resetCallback !== null) {
-            resetCallback(game);
-        }
-    }
-
-    function resetGame() {
-        var i;
-        for (i = 0; i < 9; i++) {
-            squares[i] = c3.square(app.none, app.none);
-        }
-        setGame({
-            type:type,
-            playerId:app.player1,
-            squares:squares
-        });
-    }
-
-    return {
-        get:getGame,
-        set:setGame,
-        reset:resetGame,
-        saveCurrentPlayerId: saveCurrentPlayerId,
-        saveSquare:saveSquare,
-        addResetNotification:addResetNotification
-    };
-}(c3, c3.square));
+  return {
+    get:getGame,
+    set:setGame,
+    reset:resetGame,
+    saveCurrentPlayerId:saveCurrentPlayerId,
+    saveSquare:saveSquare,
+    addResetNotification:addResetNotification
+  };
+}(c3));
 
 /*global c3 */
 /*jslint plusplus: true */
 
-c3.board = (function(app) {
-    "use strict";
-    var pieces = [];
+c3.board = (function (app) {
+  "use strict";
+  var pieces = [];
 
-    function getCurrentPlayer(currentGame) {
-        return c3.player(currentGame.playerId, app);
+  function getCurrentPlayer(currentGame) {
+    return app.player(currentGame.playerId);
+  }
+
+  function setCurrentPlayer(currentPlayer, game) {
+    game.saveCurrentPlayerId(currentPlayer.id);
+  }
+
+  function getSquarePiece(index) {
+    return pieces[index];
+  }
+
+  function setSquarePiece(index, piece, game) {
+    pieces[index] = piece;
+    game.saveSquare(index, c3.toSquare(piece));
+  }
+
+  function toPiece(square) {
+    app.ensureType("square", square);
+    return app.piece(
+        square.size,
+        square.playerId
+    );
+  }
+
+  function resetBoard(currentGame) {
+    var squares = currentGame.squares,
+        i;
+    for (i = 0; i < 9; i++) {
+      pieces[i] = toPiece(squares[i]);
     }
+  }
 
-    function setCurrentPlayer(currentPlayer, game) {
-        game.saveCurrentPlayerId(currentPlayer.id);
-    }
-
-    function getSquarePiece(index) {
-        return pieces[index];
-    }
-
-    function setSquarePiece(index, piece, game) {
-        pieces[index] = piece;
-        game.saveSquare(index, c3.toSquare(piece));
-    }
-
-    function resetBoard(currentGame) {
-        var squares = currentGame.squares,
-            i;
-        for (i = 0; i < 9; i++) {
-            pieces[i] = c3.toPiece(squares[i]);
-        }
-    }
-
-    return {
-        getSquarePiece:getSquarePiece,
-        setSquarePiece:setSquarePiece,
-        getCurrentPlayer:getCurrentPlayer,
-        setCurrentPlayer:setCurrentPlayer,
-        reset:resetBoard
-    };
+  return {
+    getSquarePiece:getSquarePiece,
+    setSquarePiece:setSquarePiece,
+    getCurrentPlayer:getCurrentPlayer,
+    setCurrentPlayer:setCurrentPlayer,
+    reset:resetBoard
+  };
 }(c3));
 /*global jQuery, c3, event */
 
-c3.ui = (function ($, app, piece, board, state) {
+c3.ui = (function ($, app, board, game) {
     "use strict";
     var container = $("#gridContainer"),
         squares = $(".sqr");
 
     //var defaultCursor = container.css("cursor");
-    function setBoardSquare(index, pieceSize) {
-        c3.board.setSquarePiece(
+    function setBoardSquare(index, pieceSize, playerId) {
+        board.setSquarePiece(
             index,
-            piece.get(pieceSize, c3.player.one),
-            state);
+            app.piece(pieceSize, playerId),
+            game);
     }
 
     function paintSquare(squareId, oldPiece, newPiece) {
@@ -278,11 +282,11 @@ c3.ui = (function ($, app, piece, board, state) {
 
     function takeTurn(squareId) {
         var oldPiece = board.getSquarePiece(squareId),
-            newPiece = piece.get(
-                piece.getNextSize(oldPiece),
-                board.getCurrentPlayer(state.get())
+            newPiece = app.piece(
+                oldPiece.getNextSize(),
+                game.get().playerId
             );
-        setBoardSquare(squareId, newPiece.size);
+        setBoardSquare(squareId, newPiece.size, newPiece.playerId);
         paintSquare(squareId, oldPiece, newPiece);
     }
 
@@ -313,4 +317,4 @@ c3.ui = (function ($, app, piece, board, state) {
         clickSquare: clickSquare
     };
 
-}(jQuery, c3, c3.piece, c3.board, c3.game));
+}(jQuery, c3, c3.board, c3.game));

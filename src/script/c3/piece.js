@@ -1,50 +1,46 @@
 /*global c3 */
 
-c3.piece = function(size, player, app) {
+c3.piece = function (size, playerId) {
   "use strict";
   var type = "piece",
       content,
       className,
-      isNoPiece,
-      text = [
-        [app.player1SmallPiece, app.player2SmallPiece],
-        [app.player1LargePiece, app.player2LargePiece]
-      ];
+      isNoPiece;
 
-    function getClassName(isNone) {
-        return isNone ? "" : "piece-" + size + " player-" + player.id;
-    }
+  function getClassName(isNone) {
+    return isNone ? "" : "piece-" + size + " player-" + playerId;
+  }
 
-    function getContent(isNone) {
-        return isNone ? 0 : text[size][player.id];
-    }
+  function getContent(isNone) {
+    return isNone ? 0 : c3.getContent(size, playerId);
+  }
 
-    function getIsNoPiece() {
-        return app.isNone(size) || app.isNone(player.id);
-    }
+  function getIsNoPiece() {
+    return c3.isNone(size) || c3.isNone(playerId);
+  }
 
-    function equals(other) {
-        app.ensureType(type, other);
-        return app.equals(size, other.size) &&
-            player.equals(other.player);
-    }
+  function equals(other) {
+    c3.ensureType(type, other);
+    return c3.equals(size, other.size) &&
+        c3.equals(playerId, other.playerId);
+  }
 
-    function getNextSize() {
-        return size === app.none ? app.smallPiece : app.largePiece;
-    }
+  function getNextSize() {
+    return size === c3.none ? c3.smallPiece : c3.largePiece;
+  }
 
-    isNoPiece = getIsNoPiece();
-    content = getContent(isNoPiece);
-    className = getClassName(isNoPiece);
+  isNoPiece = getIsNoPiece();
+  content = getContent(isNoPiece);
+  className = getClassName(isNoPiece);
 
-    return {
-        type:type,
-        content:content,
-        className:className,
-        size:size,
-        player:player,
-        isNoPiece:isNoPiece,
-        equals:equals,
-        getNextSize:getNextSize
-    };
+  return {
+    type:type,
+    content:content,
+    className:className,
+    size:size,
+    playerId:playerId,
+    isNoPiece:isNoPiece,
+    equals:equals,
+    getNextSize:getNextSize
+  };
 };

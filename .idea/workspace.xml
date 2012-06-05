@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c9100003-b091-4a2d-b69b-50b4bd28e718" name="Default" comment="" />
+    <list default="true" id="c9100003-b091-4a2d-b69b-50b4bd28e718" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/c3.js" afterPath="$PROJECT_DIR$/dist/c3.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dist/c3.min.js" afterPath="$PROJECT_DIR$/dist/c3.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/CoverThreeSpec.js" afterPath="$PROJECT_DIR$/spec/CoverThreeSpec.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/script/c3/app.js" afterPath="$PROJECT_DIR$/src/script/c3/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/script/c3/board.js" afterPath="$PROJECT_DIR$/src/script/c3/board.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/script/c3/game.js" afterPath="$PROJECT_DIR$/src/script/c3/game.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/script/c3/piece.js" afterPath="$PROJECT_DIR$/src/script/c3/piece.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/script/c3/player.js" afterPath="$PROJECT_DIR$/src/script/c3/player.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/script/c3/square.js" afterPath="$PROJECT_DIR$/src/script/c3/square.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/script/c3/ui.js" afterPath="$PROJECT_DIR$/src/script/c3/ui.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/script/cover-three.js" afterPath="$PROJECT_DIR$/src/script/cover-three.js" />
+    </list>
     <ignored path="cover-three-client.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,37 +35,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SpecRunner.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SpecRunner.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="49" selection-start="1171" selection-end="1171" vertical-scroll-proportion="-10.846154">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="square.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/script/c3/square.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="2" selection-start="155" selection-end="155" vertical-scroll-proportion="0.0">
+            <state line="9" column="2" selection-start="163" selection-end="163" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/script/c3/game.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="14" selection-start="1109" selection-end="1109" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/script/c3/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="31" selection-start="1382" selection-end="1382" vertical-scroll-proportion="0.73110723">
+            <state line="27" column="0" selection-start="616" selection-end="616" vertical-scroll-proportion="-6.12">
               <folding />
             </state>
           </provider>
@@ -61,8 +56,19 @@
       <file leaf-file-name="board.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/script/c3/board.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="0" selection-start="215" selection-end="215" vertical-scroll-proportion="0.0">
+            <state line="8" column="38" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="game.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/script/c3/game.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="46" column="29" selection-start="953" selection-end="953" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -70,7 +76,7 @@
       <file leaf-file-name="player.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/script/c3/player.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="17" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0">
+            <state line="2" column="6" selection-start="22" selection-end="22" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -88,7 +94,7 @@
       <file leaf-file-name="piece.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/script/c3/piece.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="40" selection-start="955" selection-end="955" vertical-scroll-proportion="0.0">
+            <state line="19" column="3" selection-start="422" selection-end="422" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -97,16 +103,25 @@
       <file leaf-file-name="cover-three.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/script/cover-three.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="18" selection-start="144" selection-end="144" vertical-scroll-proportion="0.0">
+            <state line="6" column="0" selection-start="107" selection-end="107" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CoverThreeSpec.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="CoverThreeSpec.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/spec/CoverThreeSpec.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="12" selection-start="2768" selection-end="2768" vertical-scroll-proportion="0.0">
+            <state line="53" column="5" selection-start="1911" selection-end="1911" vertical-scroll-proportion="0.59947646">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ui.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/script/c3/ui.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="0" selection-start="161" selection-end="161" vertical-scroll-proportion="-4.08">
               <folding />
             </state>
           </provider>
@@ -130,30 +145,30 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/script/cover-three/player.js" />
-        <option value="$PROJECT_DIR$/src/script/cover-three/square.js" />
         <option value="$PROJECT_DIR$/src/script/cover-three/ui.js" />
-        <option value="$PROJECT_DIR$/src/script/cover-three.js" />
         <option value="$PROJECT_DIR$/src/script/cover-three/board.js" />
         <option value="$PROJECT_DIR$/src/script/cover-three/game.js" />
         <option value="$PROJECT_DIR$/src/script/cover-three/piece.js" />
         <option value="$PROJECT_DIR$/grunt.js" />
-        <option value="$PROJECT_DIR$/spec/CoverThreeSpec.js" />
-        <option value="$PROJECT_DIR$/src/script/c3/player.js" />
-        <option value="$PROJECT_DIR$/src/script/c3/board.js" />
-        <option value="$PROJECT_DIR$/src/script/c3/piece.js" />
         <option value="$PROJECT_DIR$/SpecRunner.html" />
-        <option value="$PROJECT_DIR$/src/script/c3/app.js" />
         <option value="$PROJECT_DIR$/src/script/c3/square.js" />
+        <option value="$PROJECT_DIR$/src/script/c3/app.js" />
+        <option value="$PROJECT_DIR$/src/script/c3/player.js" />
+        <option value="$PROJECT_DIR$/src/script/cover-three.js" />
+        <option value="$PROJECT_DIR$/dist/c3.js" />
+        <option value="$PROJECT_DIR$/src/script/c3/board.js" />
         <option value="$PROJECT_DIR$/src/script/c3/game.js" />
+        <option value="$PROJECT_DIR$/src/script/c3/ui.js" />
+        <option value="$PROJECT_DIR$/src/script/c3/piece.js" />
+        <option value="$PROJECT_DIR$/spec/CoverThreeSpec.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="209" />
-    <option name="y" value="180" />
-    <option name="width" value="1380" />
-    <option name="height" value="774" />
+    <option name="x" value="29" />
+    <option name="y" value="28" />
+    <option name="width" value="1357" />
+    <option name="height" value="809" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -181,6 +196,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -319,25 +344,15 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="preferences.sourceCode.JavaScript" />
-    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="recentsLimit" value="5" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -398,13 +413,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="209" y="180" width="1380" height="774" extended-state="0" />
+    <frame x="29" y="28" width="1357" height="809" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936507" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30354393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31991053" sideWeight="0.99667776" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31942338" sideWeight="0.6964561" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -415,7 +431,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24864864" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -486,29 +501,30 @@
         <state line="41" column="11" selection-start="570" selection-end="570" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/script/c3/ui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="38" selection-start="683" selection-end="683" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dist/c3.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="98" selection-start="98" selection-end="98" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/script/c3/board.js">
+    <entry file="file://$PROJECT_DIR$/SpecRunner.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="215" selection-end="215" vertical-scroll-proportion="0.0" />
+        <state line="20" column="49" selection-start="1171" selection-end="1171" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/script/c3/player.js">
+    <entry file="file://$PROJECT_DIR$/src/script/c3/square.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="17" selection-start="244" selection-end="244" vertical-scroll-proportion="0.0" />
+        <state line="9" column="2" selection-start="163" selection-end="163" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dist/c3.js">
+    <entry file="file://$PROJECT_DIR$/src/script/c3/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="192" column="9" selection-start="4034" selection-end="4034" vertical-scroll-proportion="0.0" />
+        <state line="27" column="0" selection-start="616" selection-end="616" vertical-scroll-proportion="-6.12">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/grunt.js">
@@ -516,47 +532,60 @@
         <state line="18" column="25" selection-start="476" selection-end="476" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/script/c3/piece.js">
+    <entry file="file://$PROJECT_DIR$/dist/c3.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="40" selection-start="955" selection-end="955" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/script/cover-three.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="18" selection-start="144" selection-end="144" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/CoverThreeSpec.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="12" selection-start="2768" selection-end="2768" vertical-scroll-proportion="0.0">
+        <state line="226" column="0" selection-start="4528" selection-end="4528" vertical-scroll-proportion="0.5823096">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SpecRunner.html">
+    <entry file="file://$PROJECT_DIR$/src/script/c3/player.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="49" selection-start="1171" selection-end="1171" vertical-scroll-proportion="-10.846154">
+        <state line="2" column="6" selection-start="22" selection-end="22" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/script/c3/square.js">
+    <entry file="file://$PROJECT_DIR$/src/script/c3/ui.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="2" selection-start="155" selection-end="155" vertical-scroll-proportion="0.0">
+        <state line="6" column="0" selection-start="161" selection-end="161" vertical-scroll-proportion="-4.08">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/script/c3/game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="14" selection-start="1109" selection-end="1109" vertical-scroll-proportion="0.0">
+        <state line="46" column="29" selection-start="953" selection-end="953" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/script/c3/board.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="38" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/script/c3/app.js">
+    <entry file="file://$PROJECT_DIR$/src/script/c3/piece.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="31" selection-start="1382" selection-end="1382" vertical-scroll-proportion="0.73110723">
+        <state line="19" column="3" selection-start="422" selection-end="422" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/script/cover-three.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="0" selection-start="107" selection-end="107" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/CoverThreeSpec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="5" selection-start="1911" selection-end="1911" vertical-scroll-proportion="0.59947646">
           <folding />
         </state>
       </provider>

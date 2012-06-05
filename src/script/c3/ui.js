@@ -1,16 +1,16 @@
 /*global jQuery, c3, event */
 
-c3.ui = (function ($, app, piece, board, state) {
+c3.ui = (function ($, app, board, game) {
     "use strict";
     var container = $("#gridContainer"),
         squares = $(".sqr");
 
     //var defaultCursor = container.css("cursor");
-    function setBoardSquare(index, pieceSize) {
-        c3.board.setSquarePiece(
+    function setBoardSquare(index, pieceSize, playerId) {
+        board.setSquarePiece(
             index,
-            piece.get(pieceSize, c3.player.one),
-            state);
+            app.piece(pieceSize, playerId),
+            game);
     }
 
     function paintSquare(squareId, oldPiece, newPiece) {
@@ -22,11 +22,11 @@ c3.ui = (function ($, app, piece, board, state) {
 
     function takeTurn(squareId) {
         var oldPiece = board.getSquarePiece(squareId),
-            newPiece = piece.get(
-                piece.getNextSize(oldPiece),
-                board.getCurrentPlayer(state.get())
+            newPiece = app.piece(
+                oldPiece.getNextSize(),
+                game.get().playerId
             );
-        setBoardSquare(squareId, newPiece.size);
+        setBoardSquare(squareId, newPiece.size, newPiece.playerId);
         paintSquare(squareId, oldPiece, newPiece);
     }
 
@@ -57,4 +57,4 @@ c3.ui = (function ($, app, piece, board, state) {
         clickSquare: clickSquare
     };
 
-}(jQuery, c3, c3.piece, c3.board, c3.game));
+}(jQuery, c3, c3.board, c3.game));

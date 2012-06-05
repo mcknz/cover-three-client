@@ -17,22 +17,22 @@ describe("page", function () {
     loadFixtures('Test.html');
   });
   it("starts with first player turn", function () {
-    expect(c3.board.getCurrentPlayer(c3.game.get()).id).toBe(c3.player1);
+    expect(c3.game.get().playerId).toBe(c3.player1);
   });
-  it("has a small piece in the first square when clicked", function () {
+  it("has a small player 1 piece in the first square when clicked", function () {
     $(c3.ui.run);
     c3.ui.clickSquare(0);
-    expect($("#0")).toHaveText("a");
+    expect($("#0")).toHaveText(c3.getContent(c3.smallPiece, c3.player1));
   });
 });
 
 describe("piece", function () {
   "use strict";
   it("has no class name when none", function () {
-    expect(c3.piece.none.className).toBe("");
+    expect(help.getNoPiece().className).toBe("");
   });
   it("has no player class name when none", function () {
-    expect(c3.piece.none.className).not.toContain("player");
+    expect(help.getNoPiece().className).not.toContain("playerId");
   });
   it("has small class name when small", function () {
     expect(help.getPlayer1SmallPiece().className).toContain("piece-0");
@@ -47,20 +47,20 @@ describe("piece", function () {
     expect(help.getPlayer2LargePiece().className).toContain("player-1");
   });
   it("has correct entity when player 1 small piece", function () {
-    expect(help.getPlayer1SmallPiece().content).toBe(c3.player1SmallPiece);
+    expect(help.getPlayer1SmallPiece().content).toBe(c3.getContent(c3.smallPiece, c3.player1));
   });
   it("has correct entity when player 2 small piece", function () {
-    expect(help.getPlayer2SmallPiece().content).toBe(c3.player2SmallPiece);
+    expect(help.getPlayer2SmallPiece().content).toBe(c3.getContent(c3.smallPiece, c3.player2));
   });
 });
 
-describe("player", function () {
+describe("playerId", function () {
   "use strict";
   it("has player one id when created as player one", function () {
-    expect(c3.player.one.id).toBe(c3.player1);
+    expect(help.getPlayer1SmallPiece().playerId).toBe(c3.player1);
   });
   it("has player two id when created as player two", function () {
-    expect(c3.player.two.id).toBe(c3.player2);
+    expect(help.getPlayer2SmallPiece().playerId).toBe(c3.player2);
   });
 });
 
@@ -71,7 +71,7 @@ describe("board", function () {
     c3.game.reset();
   });
   it("has square one empty on start", function () {
-    expect(c3.board.getSquarePiece(0).equals(c3.piece.none)).toBeTruthy();
+    expect(c3.board.getSquarePiece(0).equals(help.getNoPiece())).toBeTruthy();
   });
   it("can set square", function () {
     c3.board.setSquarePiece(0, help.getPlayer1SmallPiece(), c3.game);
@@ -88,20 +88,24 @@ describe("board", function () {
 
 help = (function () {
   "use strict";
+  function getNoPiece() {
+      return c3.piece(c3.none, c3.none);
+  }
+
   function getPlayer1SmallPiece() {
-    return c3.piece.get(c3.piece.small, c3.player.one);
+    return c3.piece(c3.smallPiece, c3.player1);
   }
 
   function getPlayer2SmallPiece() {
-    return c3.piece.get(c3.piece.small, c3.player.two);
+    return c3.piece(c3.smallPiece, c3.player2);
   }
 
   function getPlayer1LargePiece() {
-    return c3.piece.get(c3.piece.large, c3.player.one);
+    return c3.piece(c3.largePiece, c3.player1);
   }
 
   function getPlayer2LargePiece() {
-    return c3.piece.get(c3.piece.large, c3.player.two);
+    return c3.piece(c3.largePiece, c3.player2);
   }
 
   function boardSquareHasPiece(index, piece) {
@@ -113,7 +117,8 @@ help = (function () {
     getPlayer2SmallPiece:getPlayer2SmallPiece,
     getPlayer1LargePiece:getPlayer1LargePiece,
     getPlayer2LargePiece:getPlayer2LargePiece,
-    boardSquareHasPiece:boardSquareHasPiece
+    boardSquareHasPiece:boardSquareHasPiece,
+    getNoPiece:getNoPiece
   };
 }());
 

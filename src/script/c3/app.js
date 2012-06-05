@@ -1,65 +1,65 @@
 var c3 = (function () {
-    "use strict";
-    var none = -1;
+  "use strict";
+  var none = -1,
+      player1SmallPiece ="a",
+      player1LargePiece = "A",
+      player2SmallPiece = "b",
+      player2LargePiece = "B",
+      content = [
+        [player1SmallPiece, player2SmallPiece],
+        [player1LargePiece, player2LargePiece]
+      ];
 
-    function equals(one, other) {
-        return one === other;
+  function equals(one, other) {
+    return one === other;
+  }
+
+  function isNone(value) {
+    return equals(value, none);
+  }
+
+  function ensureType(type, obj) {
+    if (type !== obj.type) {
+      throw "invalid type: " +
+          "expected '" + type + "', " +
+          "received '" + obj.type + "'";
     }
+  }
 
-    function isNone(value) {
-        return equals(value, none);
-    }
+  function toInt(s) {
+    return parseInt(s, 10);
+  }
 
-    function ensureType(type, obj) {
-        if (type !== obj.type) {
-            throw "invalid type: " +
-                "expected '" + type + "', " +
-                "received '" + obj.type + "'";
-        }
-    }
+  function toSquare(piece) {
+    ensureType("piece", piece);
+    return c3.square(piece.size, piece.playerId);
+  }
 
-    function toInt(s) {
-        return parseInt(s, 10);
-    }
+  function serialize(obj) {
+    return JSON.stringify(obj);
+  }
 
-    function toSquare(piece) {
-        ensureType("piece", piece);
-        return c3.square.get(piece.size, piece.player.id);
-    }
+  function deserialize(s) {
+    return JSON.parse(s);
+  }
 
-    function toPiece(square) {
-        ensureType("square", square);
-        return c3.piece.get(
-            square.sz,
-            c3.player.get(square.pl)
-        );
-    }
+  function getContent(size, playerId) {
+    return content[size][playerId];
+  }
 
-    function serialize(obj) {
-        return JSON.stringify(obj);
-    }
-
-    function deserialize(s) {
-        return JSON.parse(s);
-    }
-
-    return {
-        none:none,
-        player1:0,
-        player2:1,
-        smallPiece:0,
-        largePiece:1,
-        player1SmallPiece:"a",
-        player1LargePiece:"A",
-        player2SmallPiece:"b",
-        player2LargePiece:"B",
-        isNone:isNone,
-        equals:equals,
-        ensureType:ensureType,
-        toInt:toInt,
-        toPiece:toPiece,
-        toSquare:toSquare,
-        serialize:serialize,
-        deserialize:deserialize
-    };
+  return {
+    none:none,
+    player1:0,
+    player2:1,
+    smallPiece:0,
+    largePiece:1,
+    isNone:isNone,
+    equals:equals,
+    ensureType:ensureType,
+    toInt:toInt,
+    toSquare:toSquare,
+    serialize:serialize,
+    deserialize:deserialize,
+    getContent:getContent
+  };
 }());

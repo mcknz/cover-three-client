@@ -4,7 +4,7 @@ c3.square = function(size, playerId) {
     "use strict";
     return {
         type:"square",
-        pl:playerId,
-        sz:size
+        playerId:playerId,
+        size:size
     };
 };

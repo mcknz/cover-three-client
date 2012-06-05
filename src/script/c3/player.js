@@ -1,12 +1,12 @@
 /*global c3 */
 
-c3.player = function(app, id) {
+c3.player = function(id) {
   "use strict";
-  var type = "player";
+  var type = "playerId";
 
   function equals(other) {
-    app.ensureType(type, other);
-    return app.equals(id, other.id);
+    c3.ensureType(type, other);
+    return c3.equals(id, other.id);
   }
 
   return {
