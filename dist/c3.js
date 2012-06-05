@@ -134,25 +134,18 @@ c3.piece = function(size, player, app) {
 
 /*global c3 */
 
-c3.square = (function(app) {
+c3.square = function(size, playerId) {
     "use strict";
-    function getSquare(size, playerId) {
-        return {
-            type:"square",
-            pl:playerId,
-            sz:size
-        };
-    }
-
     return {
-        get:getSquare,
-        none:getSquare(app.none, app.none)
+        type:"square",
+        pl:playerId,
+        sz:size
     };
-}(c3));
+};
 /*global c3 */
 /*jslint plusplus: true */
 
-c3.game = (function(app, square) {
+c3.game = (function(app) {
     "use strict";
     var type = "game",
         gameState = null,
@@ -202,7 +195,7 @@ c3.game = (function(app, square) {
     function resetGame() {
         var i;
         for (i = 0; i < 9; i++) {
-            squares[i] = square.none;
+            squares[i] = c3.square(app.none, app.none);
         }
         setGame({
             type:type,

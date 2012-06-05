@@ -1,7 +1,7 @@
 /*global c3 */
 /*jslint plusplus: true */
 
-c3.game = (function(app, square) {
+c3.game = (function(app) {
     "use strict";
     var type = "game",
         gameState = null,
@@ -51,7 +51,7 @@ c3.game = (function(app, square) {
     function resetGame() {
         var i;
         for (i = 0; i < 9; i++) {
-            squares[i] = square.none;
+            squares[i] = c3.square(app.none, app.none);
         }
         setGame({
             type:type,
