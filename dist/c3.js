@@ -312,7 +312,6 @@ c3.board = (function (app) {
     reset:resetBoard
   };
 }(c3));
-
 /*global jQuery, c3, event */
 
 c3.ui = (function ($, app, board, game) {
