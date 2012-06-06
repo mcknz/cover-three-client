@@ -47,6 +47,12 @@ var c3 = (function () {
     return content[size][playerId];
   }
 
+  function init() {
+    c3.game.addResetNotification(c3.board.reset);
+    c3.game.addResetNotification(c3.ui.run);
+    c3.game.reset();
+  }
+
   return {
     none:none,
     player1:0,
@@ -60,6 +66,7 @@ var c3 = (function () {
     toSquare:toSquare,
     serialize:serialize,
     deserialize:deserialize,
-    getContent:getContent
+    getContent:getContent,
+    init:init
   };
 }());

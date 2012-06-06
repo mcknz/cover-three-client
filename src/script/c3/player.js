@@ -2,7 +2,7 @@
 
 c3.player = function(id) {
   "use strict";
-  var type = "playerId";
+  var type = "player";
 
   function equals(other) {
     c3.ensureType(type, other);

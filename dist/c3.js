@@ -47,6 +47,12 @@ var c3 = (function () {
     return content[size][playerId];
   }
 
+  function init() {
+    c3.game.addResetNotification(c3.board.reset);
+    c3.game.addResetNotification(c3.ui.run);
+    c3.game.reset();
+  }
+
   return {
     none:none,
     player1:0,
@@ -60,7 +66,8 @@ var c3 = (function () {
     toSquare:toSquare,
     serialize:serialize,
     deserialize:deserialize,
-    getContent:getContent
+    getContent:getContent,
+    init:init
   };
 }());
 
@@ -68,7 +75,7 @@ var c3 = (function () {
 
 c3.player = function(id) {
   "use strict";
-  var type = "playerId";
+  var type = "player";
 
   function equals(other) {
     c3.ensureType(type, other);
@@ -147,7 +154,7 @@ c3.game = (function (app) {
       gameState = null,
       playerId = app.player1,
       squares = [],
-      resetCallback = null;
+      resetCallbacks = [];
 
   function updateState() {
     gameState = app.serialize({
@@ -158,7 +165,7 @@ c3.game = (function (app) {
   }
 
   function addResetNotification(callback) {
-    resetCallback = callback;
+    resetCallbacks.push(callback);
   }
 
   function saveCurrentPlayerId(id) {
@@ -176,6 +183,7 @@ c3.game = (function (app) {
   }
 
   function setGame(newGame) {
+    var callbackCount = resetCallbacks.length - 1;
     app.ensureType(type, newGame);
     if (app.equals(gameState, app.serialize(newGame))) {
       return;
@@ -183,14 +191,17 @@ c3.game = (function (app) {
     playerId = newGame.playerId;
     squares = newGame.squares;
     updateState();
-    if (resetCallback !== null) {
-      resetCallback(newGame);
+    if (callbackCount > 0) {
+      while(callbackCount >= 0) {
+        resetCallbacks[callbackCount].call(null, newGame);
+        callbackCount-=1;
+      }
     }
   }
 
   function resetGame() {
     var i;
-    for (i = 0; i < 9; i++) {
+    for (i = 0; i < 9; i+=1) {
       squares[i] = c3.square(app.none, app.none);
     }
     setGame({
@@ -217,21 +228,15 @@ c3.board = (function (app) {
   "use strict";
   var pieces = [];
 
-  function getCurrentPlayer(currentGame) {
-    return app.player(currentGame.playerId);
-  }
-
-  function setCurrentPlayer(currentPlayer, game) {
-    game.saveCurrentPlayerId(currentPlayer.id);
-  }
-
   function getSquarePiece(index) {
     return pieces[index];
   }
 
   function setSquarePiece(index, piece, game) {
     pieces[index] = piece;
-    game.saveSquare(index, c3.toSquare(piece));
+    game.saveSquare(index, app.toSquare(piece));
+    game.saveCurrentPlayerId(
+        app.equals(piece.playerId, app.player1) ? app.player2 : app.player1);
   }
 
   function toPiece(square) {
@@ -245,7 +250,7 @@ c3.board = (function (app) {
   function resetBoard(currentGame) {
     var squares = currentGame.squares,
         i;
-    for (i = 0; i < 9; i++) {
+    for (i = 0; i < 9; i+=1) {
       pieces[i] = toPiece(squares[i]);
     }
   }
@@ -253,68 +258,68 @@ c3.board = (function (app) {
   return {
     getSquarePiece:getSquarePiece,
     setSquarePiece:setSquarePiece,
-    getCurrentPlayer:getCurrentPlayer,
-    setCurrentPlayer:setCurrentPlayer,
     reset:resetBoard
   };
 }(c3));
 /*global jQuery, c3, event */
 
 c3.ui = (function ($, app, board, game) {
-    "use strict";
-    var container = $("#gridContainer"),
-        squares = $(".sqr");
+  "use strict";
+  var container = $("#gridContainer"),
+      squares = $(".sqr");
 
-    //var defaultCursor = container.css("cursor");
-    function setBoardSquare(index, pieceSize, playerId) {
-        board.setSquarePiece(
-            index,
-            app.piece(pieceSize, playerId),
-            game);
+  function setBoardSquare(index, pieceSize, playerId) {
+    board.setSquarePiece(
+        index,
+        app.piece(pieceSize, playerId),
+        game);
+  }
+
+  function paintSquare(squareId, oldPiece, newPiece) {
+    $("#" + squareId)
+        .text(newPiece.content)
+        .removeClass(oldPiece.className)
+        .addClass(newPiece.className);
+  }
+
+  function clickSquare(squareId) {
+    var oldPiece,
+        newPiece;
+    oldPiece = board.getSquarePiece(squareId);
+    newPiece = app.piece(
+        oldPiece.getNextSize(),
+        game.get().playerId
+    );
+    setBoardSquare(squareId, newPiece.size, newPiece.playerId);
+    paintSquare(squareId, oldPiece, newPiece);
+    if(newPiece.size === app.largePiece) {
+      $("#" + squareId).off("click")
+          .removeClass("sqr")
+          .addClass("sqr-off");
     }
+  }
 
-    function paintSquare(squareId, oldPiece, newPiece) {
-        $("#" + squareId)
-            .text(newPiece.content)
-            .removeClass(oldPiece.className)
-            .addClass(newPiece.className);
-    }
+  function setup() {
+    squares.on("click", function (e) {
+      clickSquare(app.toInt(e.target.id));
+      container.css("cursor", "pointer");
+    });
 
-    function takeTurn(squareId) {
-        var oldPiece = board.getSquarePiece(squareId),
-            newPiece = app.piece(
-                oldPiece.getNextSize(),
-                game.get().playerId
-            );
-        setBoardSquare(squareId, newPiece.size, newPiece.playerId);
-        paintSquare(squareId, oldPiece, newPiece);
-    }
+    squares.mousedown(function (e) {
+      //prevent text cursor from showing on click
+      if (e.originalEvent.preventDefault) {
+        e.originalEvent.preventDefault();
+      } else {
+        event.returnValue = false;
+      }
+    });
 
-    function clickSquare(squareId) {
-        takeTurn(squareId);
-    }
+    container.fadeIn("slow");
+  }
 
-    function setup() {
-        squares.click(function (e) {
-            clickSquare(app.toInt(e.target.id));
-            container.css("cursor", "pointer");
-        });
-
-        squares.mousedown(function (e) {
-            //prevent text cursor from showing on click
-            if(e.originalEvent.preventDefault) {
-                e.originalEvent.preventDefault();
-            } else {
-                event.returnValue = false;
-            }
-        });
-
-        container.fadeIn("slow");
-    }
-
-    return {
-        run:setup,
-        clickSquare: clickSquare
-    };
+  return {
+    run:setup,
+    clickSquare:clickSquare
+  };
 
 }(jQuery, c3, c3.board, c3.game));

@@ -12,17 +12,29 @@ jasmine.getFixtures().fixturesPath = '../src';
 describe("page", function () {
   "use strict";
   beforeEach(function () {
-    c3.game.addResetNotification(c3.board.reset);
-    c3.game.reset();
     loadFixtures('Test.html');
+    c3.init();
   });
   it("starts with first player turn", function () {
     expect(c3.game.get().playerId).toBe(c3.player1);
   });
   it("has a small player 1 piece in the first square when clicked", function () {
-    $(c3.ui.run);
-    c3.ui.clickSquare(0);
+    $("#0").click();
     expect($("#0")).toHaveText(c3.getContent(c3.smallPiece, c3.player1));
+  });
+  it("current player is player 2 after the first square is clicked", function () {
+    $("#0").click();
+    expect(c3.game.get().playerId).toBe(c3.player2);
+  });
+  it("has large player 2 piece in first square after both players click first square", function () {
+    $("#0").click();
+    $("#0").click();
+    expect($("#0")).toHaveText(c3.getContent(c3.largePiece, c3.player2));
+  });
+  it("cannot change square after large piece added", function () {
+      c3.ui.clickSquare(0);
+      c3.ui.clickSquare(0);
+      expect($("#0")).toHaveClass("sqr-off");
   });
 });
 

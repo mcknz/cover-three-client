@@ -7,7 +7,7 @@ c3.game = (function (app) {
       gameState = null,
       playerId = app.player1,
       squares = [],
-      resetCallback = null;
+      resetCallbacks = [];
 
   function updateState() {
     gameState = app.serialize({
@@ -18,7 +18,7 @@ c3.game = (function (app) {
   }
 
   function addResetNotification(callback) {
-    resetCallback = callback;
+    resetCallbacks.push(callback);
   }
 
   function saveCurrentPlayerId(id) {
@@ -36,6 +36,7 @@ c3.game = (function (app) {
   }
 
   function setGame(newGame) {
+    var callbackCount = resetCallbacks.length - 1;
     app.ensureType(type, newGame);
     if (app.equals(gameState, app.serialize(newGame))) {
       return;
@@ -43,14 +44,17 @@ c3.game = (function (app) {
     playerId = newGame.playerId;
     squares = newGame.squares;
     updateState();
-    if (resetCallback !== null) {
-      resetCallback(newGame);
+    if (callbackCount > 0) {
+      while(callbackCount >= 0) {
+        resetCallbacks[callbackCount].call(null, newGame);
+        callbackCount-=1;
+      }
     }
   }
 
   function resetGame() {
     var i;
-    for (i = 0; i < 9; i++) {
+    for (i = 0; i < 9; i+=1) {
       squares[i] = c3.square(app.none, app.none);
     }
     setGame({

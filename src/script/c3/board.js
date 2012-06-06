@@ -5,21 +5,15 @@ c3.board = (function (app) {
   "use strict";
   var pieces = [];
 
-  function getCurrentPlayer(currentGame) {
-    return app.player(currentGame.playerId);
-  }
-
-  function setCurrentPlayer(currentPlayer, game) {
-    game.saveCurrentPlayerId(currentPlayer.id);
-  }
-
   function getSquarePiece(index) {
     return pieces[index];
   }
 
   function setSquarePiece(index, piece, game) {
     pieces[index] = piece;
-    game.saveSquare(index, c3.toSquare(piece));
+    game.saveSquare(index, app.toSquare(piece));
+    game.saveCurrentPlayerId(
+        app.equals(piece.playerId, app.player1) ? app.player2 : app.player1);
   }
 
   function toPiece(square) {
@@ -33,7 +27,7 @@ c3.board = (function (app) {
   function resetBoard(currentGame) {
     var squares = currentGame.squares,
         i;
-    for (i = 0; i < 9; i++) {
+    for (i = 0; i < 9; i+=1) {
       pieces[i] = toPiece(squares[i]);
     }
   }
@@ -41,8 +35,6 @@ c3.board = (function (app) {
   return {
     getSquarePiece:getSquarePiece,
     setSquarePiece:setSquarePiece,
-    getCurrentPlayer:getCurrentPlayer,
-    setCurrentPlayer:setCurrentPlayer,
     reset:resetBoard
   };
 }(c3));
