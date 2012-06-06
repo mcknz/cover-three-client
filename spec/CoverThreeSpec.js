@@ -32,10 +32,19 @@ describe("page", function () {
     expect($("#0")).toHaveText(c3.getContent(c3.largePiece, c3.player2));
   });
   it("cannot change square after large piece added", function () {
-      c3.ui.clickSquare(0);
-      c3.ui.clickSquare(0);
-      expect($("#0")).toHaveClass("sqr-off");
+    $("#0").click();
+    $("#0").click();
+    expect($("#0")).toHaveClass("sqr-off");
   });
+  it("ends game when three in a row", function () {
+      var game = c3.game.get();
+      $("#0").click(); //player 1
+      $("#3").click(); //player 2
+      $("#1").click(); //player 1
+      $("#4").click(); //player 2
+      $("#2").click(); //player 1 wins
+      expect(c3.game.get().over).toBeTruthy();
+    });
 });
 
 describe("piece", function () {
@@ -101,7 +110,7 @@ describe("board", function () {
 help = (function () {
   "use strict";
   function getNoPiece() {
-      return c3.piece(c3.none, c3.none);
+    return c3.piece(c3.none, c3.none);
   }
 
   function getPlayer1SmallPiece() {

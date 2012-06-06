@@ -7,13 +7,15 @@ c3.game = (function (app) {
       gameState = null,
       playerId = app.player1,
       squares = [],
-      resetCallbacks = [];
+      resetCallbacks = [],
+      over = false;
 
   function updateState() {
     gameState = app.serialize({
       type:type,
       playerId:playerId,
-      squares:squares
+      squares:squares,
+      over:over
     });
   }
 
@@ -31,6 +33,11 @@ c3.game = (function (app) {
     updateState();
   }
 
+  function setGameOver() {
+    over = true;
+    updateState();
+  }
+
   function getGame() {
     return app.deserialize(gameState);
   }
@@ -43,6 +50,7 @@ c3.game = (function (app) {
     }
     playerId = newGame.playerId;
     squares = newGame.squares;
+    over = newGame.over;
     updateState();
     if (callbackCount > 0) {
       while(callbackCount >= 0) {
@@ -53,14 +61,17 @@ c3.game = (function (app) {
   }
 
   function resetGame() {
-    var i;
+    var emptySquare = c3.square(app.none, app.none),
+        i;
+
     for (i = 0; i < 9; i+=1) {
-      squares[i] = c3.square(app.none, app.none);
+      squares[i] = emptySquare;
     }
     setGame({
       type:type,
       playerId:app.player1,
-      squares:squares
+      squares:squares,
+      over:over
     });
   }
 
@@ -70,6 +81,7 @@ c3.game = (function (app) {
     reset:resetGame,
     saveCurrentPlayerId:saveCurrentPlayerId,
     saveSquare:saveSquare,
-    addResetNotification:addResetNotification
+    addResetNotification:addResetNotification,
+    setGameOver:setGameOver
   };
 }(c3));

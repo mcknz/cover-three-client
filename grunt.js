@@ -7,6 +7,7 @@ module.exports = function (grunt) {
     lint: {
       files: [
         'grunt.js',
+        'spec/CoverThreeSpec.js',
         'src/script/c3/app.js',
         'src/script/c3/player.js',
         'src/script/c3/piece.js',
