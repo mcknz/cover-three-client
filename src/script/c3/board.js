@@ -15,7 +15,7 @@ c3.board = (function (app) {
         [2, 4, 6]
       ];
 
-  function isGameOver(currentGame) {
+  function getWinningPlayerId(currentGame) {
     var rowCount = rows.length - 1,
         squares = currentGame.squares,
         playerId,
@@ -30,7 +30,7 @@ c3.board = (function (app) {
         } else {
           if (app.equals(playerId, squares[rows[rowCount][1]].playerId) &&
               app.equals(playerId, squares[rows[rowCount][2]].playerId)) {
-            return true;
+            return playerId;
           } else {
             rowDone = true;
           }
@@ -38,7 +38,7 @@ c3.board = (function (app) {
       }
       rowCount -= 1;
     }
-    return false;
+    return app.none;
   }
 
   function getSquarePiece(index) {
@@ -50,9 +50,7 @@ c3.board = (function (app) {
     game.saveSquare(index, app.toSquare(piece));
     game.saveCurrentPlayerId(
         app.equals(piece.playerId, app.player1) ? app.player2 : app.player1);
-    if (isGameOver(game.get())) {
-      game.setGameOver();
-    }
+    game.saveWinningPlayerId(getWinningPlayerId(game.get()));
   }
 
   function toPiece(square) {

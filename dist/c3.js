@@ -155,14 +155,16 @@ c3.game = (function (app) {
       playerId = app.player1,
       squares = [],
       resetCallbacks = [],
-      over = false;
+      over = false,
+      winningPlayerId = app.none;
 
   function updateState() {
     gameState = app.serialize({
       type:type,
       playerId:playerId,
       squares:squares,
-      over:over
+      over:over,
+      winningPlayerId:winningPlayerId
     });
   }
 
@@ -180,8 +182,9 @@ c3.game = (function (app) {
     updateState();
   }
 
-  function setGameOver() {
-    over = true;
+  function saveWinningPlayerId(playerId) {
+    winningPlayerId = playerId;
+    over = playerId !== app.none;
     updateState();
   }
 
@@ -198,11 +201,12 @@ c3.game = (function (app) {
     playerId = newGame.playerId;
     squares = newGame.squares;
     over = newGame.over;
+    winningPlayerId = newGame.winningPlayerId;
     updateState();
     if (callbackCount > 0) {
-      while(callbackCount >= 0) {
+      while (callbackCount >= 0) {
         resetCallbacks[callbackCount].call(null, newGame);
-        callbackCount-=1;
+        callbackCount -= 1;
       }
     }
   }
@@ -211,14 +215,15 @@ c3.game = (function (app) {
     var emptySquare = c3.square(app.none, app.none),
         i;
 
-    for (i = 0; i < 9; i+=1) {
+    for (i = 0; i < 9; i += 1) {
       squares[i] = emptySquare;
     }
     setGame({
       type:type,
       playerId:app.player1,
       squares:squares,
-      over:over
+      over:over,
+      winningPlayerId:winningPlayerId
     });
   }
 
@@ -229,7 +234,7 @@ c3.game = (function (app) {
     saveCurrentPlayerId:saveCurrentPlayerId,
     saveSquare:saveSquare,
     addResetNotification:addResetNotification,
-    setGameOver:setGameOver
+    saveWinningPlayerId:saveWinningPlayerId
   };
 }(c3));
 
@@ -250,7 +255,7 @@ c3.board = (function (app) {
         [2, 4, 6]
       ];
 
-  function isGameOver(currentGame) {
+  function getWinningPlayerId(currentGame) {
     var rowCount = rows.length - 1,
         squares = currentGame.squares,
         playerId,
@@ -265,7 +270,7 @@ c3.board = (function (app) {
         } else {
           if (app.equals(playerId, squares[rows[rowCount][1]].playerId) &&
               app.equals(playerId, squares[rows[rowCount][2]].playerId)) {
-            return true;
+            return playerId;
           } else {
             rowDone = true;
           }
@@ -273,7 +278,7 @@ c3.board = (function (app) {
       }
       rowCount -= 1;
     }
-    return false;
+    return app.none;
   }
 
   function getSquarePiece(index) {
@@ -285,9 +290,7 @@ c3.board = (function (app) {
     game.saveSquare(index, app.toSquare(piece));
     game.saveCurrentPlayerId(
         app.equals(piece.playerId, app.player1) ? app.player2 : app.player1);
-    if (isGameOver(game.get())) {
-      game.setGameOver();
-    }
+    game.saveWinningPlayerId(getWinningPlayerId(game.get()));
   }
 
   function toPiece(square) {
@@ -334,20 +337,68 @@ c3.ui = (function ($, app, board, game) {
         .addClass(newPiece.className);
   }
 
+  function disableSquare(squareId) {
+    var square = $("#" + squareId);
+    if (square.hasClass("sqr")) {
+      $("#" + squareId).off("click")
+          .removeClass("sqr")
+          .addClass("sqr-off");
+    }
+  }
+
+  function disableBoard() {
+    $("*").css("cursor","default");
+    $(".sqr").off("click")
+        .removeClass("sqr")
+        .addClass("sqr-off");
+  }
+
+  function setMessage(msg) {
+    $("#message").text(msg);
+  }
+
+  function changePlayerTurn(playerId) {
+    var oldClass = "player-" +
+        (app.equals(playerId, app.player1) ?
+            app.player2 : app.player1);
+
+    $("#message")
+        .removeClass(oldClass)
+        .addClass("player-" + playerId);
+
+    setMessage("Player " + (playerId + 1) + "'s turn.");
+  }
+
   function clickSquare(squareId) {
     var oldPiece,
-        newPiece;
+        newPiece,
+        updatedGame;
     oldPiece = board.getSquarePiece(squareId);
+
+    if (oldPiece.size === app.smallPiece &&
+        oldPiece.playerId === game.get().playerId) {
+      return;
+    }
+
     newPiece = app.piece(
         oldPiece.getNextSize(),
         game.get().playerId
     );
     setBoardSquare(squareId, newPiece.size, newPiece.playerId);
     paintSquare(squareId, oldPiece, newPiece);
-    if(newPiece.size === app.largePiece) {
-      $("#" + squareId).off("click")
-          .removeClass("sqr")
-          .addClass("sqr-off");
+    if (newPiece.size === app.largePiece) {
+      disableSquare(squareId);
+    }
+
+    updatedGame = game.get();
+
+    if (updatedGame.over) {
+      disableBoard();
+      setMessage("PLAYER " +
+          (updatedGame.winningPlayerId + 1) +
+          " WINS!");
+    } else {
+      changePlayerTurn(updatedGame.playerId);
     }
   }
 
@@ -366,12 +417,14 @@ c3.ui = (function ($, app, board, game) {
       }
     });
 
+    changePlayerTurn(0);
+
     container.fadeIn("slow");
   }
 
   return {
     run:setup,
-    clickSquare:clickSquare
+    setMessage:setMessage
   };
 
 }(jQuery, c3, c3.board, c3.game));

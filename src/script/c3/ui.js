@@ -19,20 +19,68 @@ c3.ui = (function ($, app, board, game) {
         .addClass(newPiece.className);
   }
 
+  function disableSquare(squareId) {
+    var square = $("#" + squareId);
+    if (square.hasClass("sqr")) {
+      $("#" + squareId).off("click")
+          .removeClass("sqr")
+          .addClass("sqr-off");
+    }
+  }
+
+  function disableBoard() {
+    $("*").css("cursor","default");
+    $(".sqr").off("click")
+        .removeClass("sqr")
+        .addClass("sqr-off");
+  }
+
+  function setMessage(msg) {
+    $("#message").text(msg);
+  }
+
+  function changePlayerTurn(playerId) {
+    var oldClass = "player-" +
+        (app.equals(playerId, app.player1) ?
+            app.player2 : app.player1);
+
+    $("#message")
+        .removeClass(oldClass)
+        .addClass("player-" + playerId);
+
+    setMessage("Player " + (playerId + 1) + "'s turn.");
+  }
+
   function clickSquare(squareId) {
     var oldPiece,
-        newPiece;
+        newPiece,
+        updatedGame;
     oldPiece = board.getSquarePiece(squareId);
+
+    if (oldPiece.size === app.smallPiece &&
+        oldPiece.playerId === game.get().playerId) {
+      return;
+    }
+
     newPiece = app.piece(
         oldPiece.getNextSize(),
         game.get().playerId
     );
     setBoardSquare(squareId, newPiece.size, newPiece.playerId);
     paintSquare(squareId, oldPiece, newPiece);
-    if(newPiece.size === app.largePiece) {
-      $("#" + squareId).off("click")
-          .removeClass("sqr")
-          .addClass("sqr-off");
+    if (newPiece.size === app.largePiece) {
+      disableSquare(squareId);
+    }
+
+    updatedGame = game.get();
+
+    if (updatedGame.over) {
+      disableBoard();
+      setMessage("PLAYER " +
+          (updatedGame.winningPlayerId + 1) +
+          " WINS!");
+    } else {
+      changePlayerTurn(updatedGame.playerId);
     }
   }
 
@@ -51,12 +99,14 @@ c3.ui = (function ($, app, board, game) {
       }
     });
 
+    changePlayerTurn(0);
+
     container.fadeIn("slow");
   }
 
   return {
     run:setup,
-    clickSquare:clickSquare
+    setMessage:setMessage
   };
 
 }(jQuery, c3, c3.board, c3.game));
