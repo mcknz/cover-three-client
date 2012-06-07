@@ -1,63 +1,84 @@
+html {
+  cursor: default;
+}
+
+h1, h2, h3 {
+  margin:5px;
+}
+h1 {
+  font-size: 1.25em;
+}
+
+h2 {
+  font-size: 0.8em;
+  font-weight: normal;
+}
+
+h3 {
+  font-size: 1em;
+  font-style: italic;
+}
+
 #currentPlayer {
-    display: none;
+  display: none;
 }
 
 #pageContainer {
-    width: 100%;
+  width: 100%;
 }
 
 #gridContainer {
-    display: none;
-    margin:0 auto;
-    width: 300px;
+  display: none;
+  margin: 0 auto;
+  width: 300px;
 }
 
 .sqrTable {
-    height: 30px;
-    width: 300px;
-    border-spacing: 10px;
+  height: 30px;
+  width: 300px;
+  border-spacing: 10px;
 }
 
 tr:hover .sqr {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 tr:hover .sqr-off {
-    cursor: default;
+  cursor: default;
 }
 
 .sqr,
 .sqr-off {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    width: 75px;
-    height: 75px;
-    text-align: center;
-    background-color: #dddddd;
-    font-size: 1.75em;
-    -webkit-border-radius: 16px;
-    -moz-border-radius: 16px;
-    border-radius: 16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 75px;
+  height: 75px;
+  text-align: center;
+  background-color: #dddddd;
+  font-size: 1.75em;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  border-radius: 16px;
 }
 
 .player-0 {
-    color: #F60;
+  color: #F60;
 }
 
 .player-1 {
-    color: #309;
+  color: #309;
 }
 
 .piece-0 {
-    font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 .piece-1 {
-    font-size: 2em;
+  font-size: 2em;
 }
 
 td {
-    /*border: 1px solid red;*/
+  /*border: 1px solid red;*/
 }
 
 

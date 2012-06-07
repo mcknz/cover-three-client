@@ -8,14 +8,16 @@ c3.game = (function (app) {
       playerId = app.player1,
       squares = [],
       resetCallbacks = [],
-      over = false;
+      over = false,
+      winningPlayerId = app.none;
 
   function updateState() {
     gameState = app.serialize({
       type:type,
       playerId:playerId,
       squares:squares,
-      over:over
+      over:over,
+      winningPlayerId:winningPlayerId
     });
   }
 
@@ -33,8 +35,9 @@ c3.game = (function (app) {
     updateState();
   }
 
-  function setGameOver() {
-    over = true;
+  function saveWinningPlayerId(playerId) {
+    winningPlayerId = playerId;
+    over = playerId !== app.none;
     updateState();
   }
 
@@ -51,11 +54,12 @@ c3.game = (function (app) {
     playerId = newGame.playerId;
     squares = newGame.squares;
     over = newGame.over;
+    winningPlayerId = newGame.winningPlayerId;
     updateState();
     if (callbackCount > 0) {
-      while(callbackCount >= 0) {
+      while (callbackCount >= 0) {
         resetCallbacks[callbackCount].call(null, newGame);
-        callbackCount-=1;
+        callbackCount -= 1;
       }
     }
   }
@@ -64,14 +68,15 @@ c3.game = (function (app) {
     var emptySquare = c3.square(app.none, app.none),
         i;
 
-    for (i = 0; i < 9; i+=1) {
+    for (i = 0; i < 9; i += 1) {
       squares[i] = emptySquare;
     }
     setGame({
       type:type,
       playerId:app.player1,
       squares:squares,
-      over:over
+      over:over,
+      winningPlayerId:winningPlayerId
     });
   }
 
@@ -82,6 +87,6 @@ c3.game = (function (app) {
     saveCurrentPlayerId:saveCurrentPlayerId,
     saveSquare:saveSquare,
     addResetNotification:addResetNotification,
-    setGameOver:setGameOver
+    saveWinningPlayerId:saveWinningPlayerId
   };
 }(c3));

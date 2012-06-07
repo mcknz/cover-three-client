@@ -27,6 +27,7 @@ describe("page", function () {
     expect(c3.game.get().playerId).toBe(c3.player2);
   });
   it("has large player 2 piece in first square after both players click first square", function () {
+    var game = c3.game.get();
     $("#0").click();
     $("#0").click();
     expect($("#0")).toHaveText(c3.getContent(c3.largePiece, c3.player2));
@@ -36,16 +37,95 @@ describe("page", function () {
     $("#0").click();
     expect($("#0")).toHaveClass("sqr-off");
   });
-  it("ends game when three in a row", function () {
-      var game = c3.game.get();
-      $("#0").click(); //player 1
-      $("#3").click(); //player 2
-      $("#1").click(); //player 1
-      $("#4").click(); //player 2
-      $("#2").click(); //player 1 wins
-      expect(c3.game.get().over).toBeTruthy();
-    });
+  it("cannot set small piece to large for the same player", function () {
+    var game = c3.game.get();
+    $("#0").click();
+    $("#1").click();
+    $("#0").click();
+    expect(c3.game.get().squares[0].size).toBe(c3.smallPiece);
+  });
+
 });
+
+describe("message", function () {
+  "use strict";
+  beforeEach(function () {
+    loadFixtures('Test.html');
+    c3.init();
+  });
+  it("is player 1 turn first", function () {
+    expect($("#message").text()).toBe("Player 1's turn.");
+  });
+  it("is player 1 color first", function () {
+    expect($("#message")).toHaveClass("player-0");
+  });
+  it("is not player 2 turn first", function () {
+    expect($("#message").text()).not.toBe("Player 2's turn.");
+  });
+  it("is not player 2 color first", function () {
+    expect($("#message")).not.toHaveClass("player-1");
+  });
+  it("is player 2 turn second", function () {
+    $("#0").click();
+    expect($("#message").text()).toBe("Player 2's turn.");
+  });
+  it("is player 2 color second", function () {
+    $("#0").click();
+    expect($("#message")).toHaveClass("player-1");
+  });
+  it("is not player 1 turn second", function () {
+    $("#0").click();
+    expect($("#message").text()).not.toBe("Player 1's turn.");
+  });
+  it("is not player 1 color second", function () {
+    var game = c3.ui.setMessage("s");
+    $("#0").click();
+    expect($("#message")).not.toHaveClass("player-0");
+  });
+  it("is player 1 turn third", function () {
+    $("#0").click();
+    $("#1").click();
+    expect($("#message").text()).toBe("Player 1's turn.");
+  });
+  it("is player 1 color third", function () {
+    $("#0").click();
+    $("#1").click();
+    expect($("#message")).toHaveClass("player-0");
+  });
+  it("is not player 2 turn third", function () {
+    $("#0").click();
+    $("#1").click();
+    expect($("#message").text()).not.toBe("Player 2's turn.");
+  });
+  it("is not player 2 color third", function () {
+    $("#0").click();
+    $("#1").click();
+    expect($("#message")).not.toHaveClass("player-1");
+  });
+});
+
+describe("winning the game", function () {
+  "use strict";
+  beforeEach(function () {
+    loadFixtures('Test.html');
+    c3.init();
+    $("#0").click(); //player 1
+    $("#3").click(); //player 2
+    $("#1").click(); //player 1
+    $("#4").click(); //player 2
+    $("#2").click(); //player 1 wins
+  });
+  it("happens when three in a row", function () {
+    expect(c3.game.get().over).toBeTruthy();
+  });
+  it("has correct player", function () {
+    expect(c3.game.get().winningPlayerId).toBe(c3.player1);
+  });
+  it("has correct message", function () {
+    expect($("#message").text()).toBe("PLAYER 1 WINS!");
+  });
+});
+
 
 describe("piece", function () {
   "use strict";
