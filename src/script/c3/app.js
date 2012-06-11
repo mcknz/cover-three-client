@@ -1,14 +1,6 @@
 var c3 = (function () {
   "use strict";
-  var none = -1,
-      player1SmallPiece ="a",
-      player1LargePiece = "A",
-      player2SmallPiece = "b",
-      player2LargePiece = "B",
-      content = [
-        [player1SmallPiece, player2SmallPiece],
-        [player1LargePiece, player2LargePiece]
-      ];
+  var none = -1;
 
   function equals(one, other) {
     return one === other;
@@ -43,10 +35,6 @@ var c3 = (function () {
     return JSON.parse(s);
   }
 
-  function getContent(size, playerId) {
-    return content[size][playerId];
-  }
-
   function init() {
     c3.game.addResetNotification(c3.board.reset);
     c3.game.addResetNotification(c3.ui.run);
@@ -66,7 +54,6 @@ var c3 = (function () {
     toSquare:toSquare,
     serialize:serialize,
     deserialize:deserialize,
-    getContent:getContent,
     init:init
   };
 }());

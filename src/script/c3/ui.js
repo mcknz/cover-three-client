@@ -14,7 +14,8 @@ c3.ui = (function ($, app, board, game) {
 
   function paintSquare(squareId, oldPiece, newPiece) {
     $("#" + squareId)
-        .text(newPiece.content)
+        .html('<img src="images/piece' +
+          newPiece.size + '_player' + newPiece.playerId + '.svg" />')
         .removeClass(oldPiece.className)
         .addClass(newPiece.className);
   }

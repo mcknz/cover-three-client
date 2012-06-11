@@ -1,14 +1,6 @@
 var c3 = (function () {
   "use strict";
-  var none = -1,
-      player1SmallPiece ="a",
-      player1LargePiece = "A",
-      player2SmallPiece = "b",
-      player2LargePiece = "B",
-      content = [
-        [player1SmallPiece, player2SmallPiece],
-        [player1LargePiece, player2LargePiece]
-      ];
+  var none = -1;
 
   function equals(one, other) {
     return one === other;
@@ -43,10 +35,6 @@ var c3 = (function () {
     return JSON.parse(s);
   }
 
-  function getContent(size, playerId) {
-    return content[size][playerId];
-  }
-
   function init() {
     c3.game.addResetNotification(c3.board.reset);
     c3.game.addResetNotification(c3.ui.run);
@@ -66,7 +54,6 @@ var c3 = (function () {
     toSquare:toSquare,
     serialize:serialize,
     deserialize:deserialize,
-    getContent:getContent,
     init:init
   };
 }());
@@ -94,19 +81,10 @@ c3.piece = function (size, playerId) {
   "use strict";
   var type = "piece",
       content,
-      className,
-      isNoPiece;
+      className;
 
-  function getClassName(isNone) {
-    return isNone ? "" : "piece-" + size + " player-" + playerId;
-  }
-
-  function getContent(isNone) {
-    return isNone ? 0 : c3.getContent(size, playerId);
-  }
-
-  function getIsNoPiece() {
-    return c3.isNone(size) || c3.isNone(playerId);
+  function getClassName() {
+    return c3.isNone(size) ? "" : "piece-" + size + " player-" + playerId;
   }
 
   function equals(other) {
@@ -119,17 +97,13 @@ c3.piece = function (size, playerId) {
     return size === c3.none ? c3.smallPiece : c3.largePiece;
   }
 
-  isNoPiece = getIsNoPiece();
-  content = getContent(isNoPiece);
-  className = getClassName(isNoPiece);
+  className = getClassName();
 
   return {
     type:type,
-    content:content,
     className:className,
     size:size,
     playerId:playerId,
-    isNoPiece:isNoPiece,
     equals:equals,
     getNextSize:getNextSize
   };
@@ -315,6 +289,7 @@ c3.board = (function (app) {
     reset:resetBoard
   };
 }(c3));
+
 /*global jQuery, c3, event */
 
 c3.ui = (function ($, app, board, game) {
@@ -331,7 +306,8 @@ c3.ui = (function ($, app, board, game) {
 
   function paintSquare(squareId, oldPiece, newPiece) {
     $("#" + squareId)
-        .text(newPiece.content)
+        .html('<img src="images/piece' +
+          newPiece.size + '_player' + newPiece.playerId + '.svg" />')
         .removeClass(oldPiece.className)
         .addClass(newPiece.className);
   }
@@ -426,9 +402,4 @@ c3.ui = (function ($, app, board, game) {
     setMessage:setMessage
   };
 
-}(jQuery, c3, c3.board, c3.game));/*global jQuery, c3 */
-
-c3.game.addResetNotification(c3.board.reset);
-c3.game.reset();
-jQuery(c3.ui.run);
-
+}(jQuery, c3, c3.board, c3.game));

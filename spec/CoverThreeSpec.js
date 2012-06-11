@@ -20,7 +20,7 @@ describe("page", function () {
   });
   it("has a small player 1 piece in the first square when clicked", function () {
     $("#0").click();
-    expect($("#0")).toHaveText(c3.getContent(c3.smallPiece, c3.player1));
+    expect($("#0")).toContain($("img[src~='images/piece0_player0.svg']"));
   });
   it("current player is player 2 after the first square is clicked", function () {
     $("#0").click();
@@ -30,7 +30,7 @@ describe("page", function () {
     var game = c3.game.get();
     $("#0").click();
     $("#0").click();
-    expect($("#0")).toHaveText(c3.getContent(c3.largePiece, c3.player2));
+    expect($("#0")).toContain($("img[src~='images/piece1_player1.svg']"));
   });
   it("cannot change square after large piece added", function () {
     $("#0").click();
@@ -146,12 +146,6 @@ describe("piece", function () {
   });
   it("has player 2 class name when player 2", function () {
     expect(help.getPlayer2LargePiece().className).toContain("player-1");
-  });
-  it("has correct entity when player 1 small piece", function () {
-    expect(help.getPlayer1SmallPiece().content).toBe(c3.getContent(c3.smallPiece, c3.player1));
-  });
-  it("has correct entity when player 2 small piece", function () {
-    expect(help.getPlayer2SmallPiece().content).toBe(c3.getContent(c3.smallPiece, c3.player2));
   });
 });
 
