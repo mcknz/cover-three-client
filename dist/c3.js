@@ -35,10 +35,11 @@ var c3 = (function () {
     return JSON.parse(s);
   }
 
-  function init() {
+  function init(newGame) {
     c3.game.addResetNotification(c3.board.reset);
     c3.game.addResetNotification(c3.ui.run);
-    c3.game.reset();
+    c3.game.addResetNotification(c3.ui.repaint);
+    c3.game.set(newGame);
   }
 
   return {
@@ -75,7 +76,6 @@ c3.player = function(id) {
     equals:equals
   };
 };
-/*global c3 */
 
 c3.piece = function (size, playerId) {
   "use strict";
@@ -109,8 +109,6 @@ c3.piece = function (size, playerId) {
   };
 };
 
-/*global c3 */
-
 c3.square = function(size, playerId) {
     "use strict";
     return {
@@ -119,8 +117,6 @@ c3.square = function(size, playerId) {
         size:size
     };
 };
-/*global c3 */
-/*jslint plusplus: true */
 
 c3.game = (function (app) {
   "use strict";
@@ -185,35 +181,32 @@ c3.game = (function (app) {
     }
   }
 
-  function resetGame() {
+  function getNew() {
     var emptySquare = c3.square(app.none, app.none),
         i;
 
     for (i = 0; i < 9; i += 1) {
       squares[i] = emptySquare;
     }
-    setGame({
+    return {
       type:type,
       playerId:app.player1,
       squares:squares,
       over:over,
       winningPlayerId:winningPlayerId
-    });
+    };
   }
 
   return {
     get:getGame,
     set:setGame,
-    reset:resetGame,
+    getNew:getNew,
     saveCurrentPlayerId:saveCurrentPlayerId,
     saveSquare:saveSquare,
     addResetNotification:addResetNotification,
     saveWinningPlayerId:saveWinningPlayerId
   };
 }(c3));
-
-/*global c3 */
-/*jslint plusplus: true */
 
 c3.board = (function (app) {
   "use strict";
@@ -289,8 +282,6 @@ c3.board = (function (app) {
     reset:resetBoard
   };
 }(c3));
-
-/*global jQuery, c3, event */
 
 c3.ui = (function ($, app, board, game) {
   "use strict";
@@ -377,6 +368,17 @@ c3.ui = (function ($, app, board, game) {
     }
   }
 
+  function repaint(currentGame) {
+    var squares = currentGame.squares,
+      empty = c3.piece(app.none, app.none),
+      square;
+    for (i = 0; i < 9; i += 1) {
+      square = squares[i];
+      paintSquare(i, empty, c3.piece(square.size, square.playerId));
+    }
+    changePlayerTurn(currentGame.playerId);
+  }
+
   function setup() {
     squares.on("click", function (e) {
       clickSquare(app.toInt(e.target.id));
@@ -399,7 +401,8 @@ c3.ui = (function ($, app, board, game) {
 
   return {
     run:setup,
-    setMessage:setMessage
+    setMessage:setMessage,
+	repaint: repaint
   };
 
 }(jQuery, c3, c3.board, c3.game));
